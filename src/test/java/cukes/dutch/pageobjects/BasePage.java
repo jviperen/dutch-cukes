@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class BasePage {
@@ -47,6 +49,11 @@ public class BasePage {
 
     public String getValueFromElement(By element, String attributeValue){
     	return webDriver.findElement(element).getAttribute(attributeValue);
+    }
+
+    public void waitForElementPresent(By element){
+        WebDriverWait wait = new WebDriverWait(getWebDriver(), 5);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
 
