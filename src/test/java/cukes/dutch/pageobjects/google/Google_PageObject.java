@@ -28,11 +28,7 @@ public class Google_PageObject extends BasePage {
     }
 
     public void assert_eerste_zoek_resultaat(String eerste_positie){
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        waitForElementPresent(eerste_zoek_resultaat);
         Assert.assertEquals(eerste_positie,
                 getWebDriver().findElement(eerste_zoek_resultaat).getText());
     }
