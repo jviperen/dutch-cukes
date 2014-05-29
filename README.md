@@ -11,8 +11,7 @@ How to run tests (from root dir)
 
 2) mvn test -Dcucumber.options="--tags @tag" (kicks off RunRegressionTest.Java but overrides @tag)
 
-3) mvn test -Dbrowser.type="chrome"
-Overrides the browser default option of firefox
+3) mvn test -Dbrowser.type="firefox" (Overrides the browser default option of chrome)
 
 
 
