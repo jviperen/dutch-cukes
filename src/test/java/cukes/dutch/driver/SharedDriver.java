@@ -131,10 +131,10 @@ public class SharedDriver extends EventFiringWebDriver {
     }
 
     public static WebDriver getPhantomDriver(){
+        //        ToDo : implement me!!!
         WebDriver phantomJsDriver = null;
         logMessage(Level.WARNING, "PhantomJS driver needs to be implemented!!! ");
         assert phantomJsDriver != null;
-//        ToDo : implement me!!!
         return phantomJsDriver;
     }
 
