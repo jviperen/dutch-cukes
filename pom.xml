@@ -12,7 +12,7 @@
 		<selenium.version>2.40.0</selenium.version>
 		<junit.version>4.11</junit.version>
 		<maven.core>3.0.4</maven.core>
-		<browser.type>firefox</browser.type>
+		<browser.type>chrome</browser.type>
 	</properties>
 
 	<build>

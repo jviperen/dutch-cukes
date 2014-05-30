@@ -102,6 +102,8 @@ public class SharedDriver extends EventFiringWebDriver {
         }
     }
 
+    // Drivers section
+
     public static WebDriver getFireFoxDriver() {
         WebDriver firefoxDriver;
         File pathToBinary = null;
@@ -122,7 +124,12 @@ public class SharedDriver extends EventFiringWebDriver {
 
     public static WebDriver getChromeDriver() {
         WebDriver chromeDriver;
-        final String pathToBinary = "D:\\data\\sla20246\\Downloads\\chromedriver.exe";
+        String pathToBinary = null;
+        try {
+            pathToBinary = PROP_LOADER.loadLocalProperty("chrome.binary.location");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setScreenshot(true);
         //
         System.setProperty("webdriver.chrome.driver",pathToBinary);
