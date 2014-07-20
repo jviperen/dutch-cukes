@@ -1,15 +1,16 @@
-package cukes.dutch.driver;
+package cukes.dutch.driver.utils;
 
+import cukes.dutch.driver.exceptions.CouldNotReadDriverFromLocalProperty;
+import cukes.dutch.driver.exceptions.CouldNotReadFromPomException;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.apache.maven.project.MavenProject;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.apache.maven.project.MavenProject;
 
 public class PropertyLoader {
 
@@ -33,7 +34,7 @@ public class PropertyLoader {
 		return prop.getProperty(propertyName);
 	}
 
-	public String getPomProperty(String propertyPom) {
+	public String getPomProperty(String propertyPom) throws CouldNotReadFromPomException {
 		String pompProperty = null;
 		Model model = null;
 		FileReader reader = null;
@@ -45,9 +46,8 @@ public class PropertyLoader {
 		     model = mavenReader.read(reader);
 		     model.setPomFile(pomFile);
 		}catch(Exception ex){
-		     ex.printStackTrace();
-		     logMessage(Level.INFO, "Something went wrong when reading the POM.xml");
-		}
+            throw new CouldNotReadFromPomException("We couldn't read from pomfile ", ex);
+        }
 
 		MavenProject project = new MavenProject(model);
 
@@ -59,5 +59,18 @@ public class PropertyLoader {
 		}
 		return pompProperty;
 	}
+
+    public String getLocalDriverBinary(String driver) throws CouldNotReadDriverFromLocalProperty {
+        String driverBinary = null;
+        String binaryLocationDriver = driver + ".binary.location";
+        try {
+            driverBinary = loadLocalProperty(binaryLocationDriver);
+        } catch (IOException e) {
+            {
+                throw new CouldNotReadDriverFromLocalProperty("We couldn't read from local.properties, tried to read "
+                    + driver + " with binary " + binaryLocationDriver.toUpperCase(), e); }
+        }
+        return driverBinary;
+    }
 
 }
