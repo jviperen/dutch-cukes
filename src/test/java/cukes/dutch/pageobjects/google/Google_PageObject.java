@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 
 public class Google_PageObject extends BasePage {
 
-	public Google_PageObject(WebDriver webDriver) {
-		super(webDriver);
-	}
+    public Google_PageObject(WebDriver webDriver) {
+        super(webDriver);
+    }
 
-    private final static Logger LOGGER = Logger.getLogger(Google_PageObject.class .getName());
+    private final static Logger LOGGER = Logger.getLogger(Google_PageObject.class.getName());
     // locators
     private String zoekveld_element_byName = "q";
     // element

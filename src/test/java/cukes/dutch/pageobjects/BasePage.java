@@ -7,6 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 
@@ -22,11 +25,8 @@ public class BasePage {
     }
 
 	public void navigateTo(String linkText) {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        webDriver.getPageSource().contains(linkText);
         webDriver.findElement(By.linkText(linkText)).click();
     }
 
@@ -38,12 +38,28 @@ public class BasePage {
     	Assert.assertTrue(element.isDisplayed());
     }
 
-    public void assertCurrentUrl(String urlExpected){
-    	Assert.assertEquals(urlExpected, getWebDriver().getCurrentUrl());
+    public void assertCurrentUrl(String urlExpected) {
+        dirtySleep(1000);
+        Assert.assertEquals(urlExpected, getWebDriver().getCurrentUrl());
+    }
+
+    private void dirtySleep(int millis){
+        // EVIL METHOD (through UI this can be horrible. What if somebodt desides to set millis to 1000000)
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickOnElement(By element){
+        waitForElementPresent(element);
     	webDriver.findElement(element).click();
+    }
+
+    public void clickOnElement(WebElement element) {
+        waitForElementPresent(element);
+        element.click();
     }
 
     public void clearFieldFromElement(By element){
@@ -51,6 +67,7 @@ public class BasePage {
     }
 
     public String getTextFromElement(By element){
+        waitForElementPresent(element);
     	return webDriver.findElement(element).getText();
     }
 
