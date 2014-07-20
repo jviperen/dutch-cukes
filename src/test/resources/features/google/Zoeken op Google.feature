@@ -14,12 +14,17 @@ Functionaliteit: navigatie en zoeken Google.nl
   Abstract Scenario: 1 Scenario: Navigeer naar Google
     Gegeven de url "https://www.google.nl" is geopend
     Als er wordt gezocht met "<zoek_criteria>"
-    Dan wordt "<zoek_resultaat>" gevonden op eerste positie
-
+    En zoek resultaat "<link>" wordt geopend
+    Dan is de url van de pagina "<url>"
   Voorbeelden:
-    | zoek_criteria | zoek_resultaat               |
-    | facebook      | https://nl-nl.facebook.com/  |
-    | youtube       | www.youtube.com/?gl=NL&hl=nl |
+    | zoek_criteria | link                                                        |   url                                       |
+    | facebook      | Welcome to Facebook - Log In, Sign Up or Learn More         | https://www.facebook.com/                   |
+    | github        | Set Up Git                                                  | https://help.github.com/articles/set-up-git |
 
-  Scenario: 2 Scenario: Navigeer naar Google
+  Scenario: 2 Scenario: Navigeer naar Google zonder voorbeelden
     Gegeven de url "https://www.google.nl" is geopend
+    Als er wordt gezocht met "aad"
+    En zoek resultaat "American Academy of Dermatology" wordt geopend
+    Dan is de url van de pagina "http://www.aad.org/"
+
+

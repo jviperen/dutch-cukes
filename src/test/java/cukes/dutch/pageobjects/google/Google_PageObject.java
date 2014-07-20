@@ -1,9 +1,9 @@
 package cukes.dutch.pageobjects.google;
 
 import cukes.dutch.pageobjects.BasePage;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,22 +14,22 @@ public class Google_PageObject extends BasePage {
 		super(webDriver);
 	}
 
-     private final static Logger LOGGER = Logger.getLogger(Google_PageObject.class .getName());
-
-    private By zoek_veld = By.id("gbqfq");
-    private By eerste_zoek_resultaat = By.xpath("//*[@id='rso']//div[1]/cite");
+    private final static Logger LOGGER = Logger.getLogger(Google_PageObject.class .getName());
+    // locators
+    private String zoekveld_element_byName = "q";
+    // element
+    WebElement zoekVeld_element;
 
     public void log_setup_showcase() {
-        LOGGER.log(Level.INFO, "Background is executed");
+        LOGGER.log(Level.INFO, "Background is executed with no implementation");
     }
 
     public void zoek_met_criteria(String zoekCriteria) {
-        getWebDriver().findElement(zoek_veld).sendKeys(zoekCriteria);
+        zoekVeld_element = getWebDriver().findElement(By.name(zoekveld_element_byName));
+        zoekVeld_element.isDisplayed();
+        zoekVeld_element.sendKeys(zoekCriteria);
+        zoekVeld_element.submit();
     }
 
-    public void assert_eerste_zoek_resultaat(String eerste_positie){
-        waitForElementPresent(eerste_zoek_resultaat);
-        Assert.assertEquals(eerste_positie,
-                getWebDriver().findElement(eerste_zoek_resultaat).getText());
-    }
+
 }

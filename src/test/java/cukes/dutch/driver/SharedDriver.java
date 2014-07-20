@@ -4,6 +4,7 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.junit.Assert;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -12,6 +13,9 @@ import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.io.File;
@@ -138,10 +142,15 @@ public class SharedDriver extends EventFiringWebDriver {
     }
 
     public static WebDriver getPhantomDriver(){
-        //        ToDo : implement me!!!
         WebDriver phantomJsDriver = null;
-        logMessage(Level.WARNING, "PhantomJS driver needs to be implemented!!! ");
-        assert phantomJsDriver != null;
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps = DesiredCapabilities.phantomjs();
+        caps.setCapability("takesScreenshot", true);
+        caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
+                "D:\\data\\sla20246\\Downloads\\phantomjs-1.9.7-windows\\phantomjs.exe");
+        phantomJsDriver = new PhantomJSDriver(caps);
+        phantomJsDriver.manage().window().setSize( new Dimension( 1124, 850 ) );
+        logMessage(Level.INFO, "We have a GHOSTDRIVER SELECTED!!");
         return phantomJsDriver;
     }
 

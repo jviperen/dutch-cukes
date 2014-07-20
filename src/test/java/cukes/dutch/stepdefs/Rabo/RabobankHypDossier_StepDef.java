@@ -4,22 +4,22 @@ import cucumber.api.java.nl.Als;
 import cucumber.api.java.nl.Dan;
 import cukes.dutch.driver.SharedDriver;
 import cukes.dutch.pageobjects.BasePage;
-import cukes.dutch.pageobjects.rabobank.RhdFrontPageObject;
+import cukes.dutch.pageobjects.rabobank.Rabobank_PageObject;
 
 public class RabobankHypDossier_StepDef {
 
-	private RhdFrontPageObject frontPage;
+	private Rabobank_PageObject frontPage;
     private BasePage basePage;
 
     public RabobankHypDossier_StepDef(SharedDriver webDriver) {
-        frontPage = new RhdFrontPageObject(webDriver);
+        frontPage = new Rabobank_PageObject(webDriver);
         basePage = new BasePage(webDriver);
     }
 
     @Dan("^kan de gebruiker een uitgebreide berekening maken$")
     public void kan_de_gebruiker_een_uitgebreide_berekening_maken() throws Throwable {
     	frontPage.assertUrlHypotheken();
-    	frontPage.assertThatUitgebreideBerekeningKnopIsVisible();
+        frontPage.assertThatUitgebreideBerekeningKnopIsVisible();
     }
 
     @Als("^de gebruiker navigeert naar het Rabobank HypotheekDossier$")
