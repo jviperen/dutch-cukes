@@ -1,6 +1,6 @@
 #language: nl
-@regression @google
-Functionaliteit: navigatie en zoeken Google.nl
+@regression @google @acceptance
+Functionaliteit: Gebruiker zoekt via google en opent gezochte website
 
   - Acceptance criteria
   - AC 1: Moet Nederlandse versie van google openen
@@ -16,10 +16,11 @@ Functionaliteit: navigatie en zoeken Google.nl
     Als er wordt gezocht met "<zoek_criteria>"
     En zoek resultaat "<link>" wordt geopend
     Dan is de url van de pagina "<url>"
+
   Voorbeelden:
-    | zoek_criteria | link                                                        |   url                                       |
-    | facebook      | Welcome to Facebook - Log In, Sign Up or Learn More         | https://www.facebook.com/                   |
-    | github        | Set Up Git                                                  | https://help.github.com/articles/set-up-git |
+    | zoek_criteria | link                      | url                         |
+    | raspberry     | Raspberry Pi              | http://www.raspberrypi.org/ |
+    | cucumber      | Cucumber - Making BDD fun | http://cukes.info/          |
 
   Scenario: 2 Scenario: Navigeer naar Google zonder voorbeelden
     Gegeven de url "https://www.google.nl" is geopend
