@@ -139,10 +139,10 @@ public class SharedDriver extends EventFiringWebDriver {
     }
 
     public static WebDriver getPhantomDriver(){
-        WebDriver phantomJsDriver = null;
+        WebDriver phantomJsDriver;
         // Phantom  settings
-        DesiredCapabilities caps = new DesiredCapabilities();
-        caps = DesiredCapabilities.phantomjs();
+//        DesiredCapabilities caps
+        DesiredCapabilities caps = DesiredCapabilities.phantomjs();
         caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
                 PROP_LOADER.getLocalDriverBinary(PHANTOM));
         caps.setCapability("takesScreenshot", true);
