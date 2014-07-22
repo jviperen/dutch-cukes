@@ -15,7 +15,6 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -115,39 +114,29 @@ public class SharedDriver extends EventFiringWebDriver {
     // Drivers section
 
     public static WebDriver getFireFoxDriver(){
-        WebDriver firefoxDriver;
-        // FF binary and profile
-        File pathToBinary = new File(PROP_LOADER.getLocalDriverBinary("firefox"));
         setScreenshot(true);
+        File pathToBinary = new File(PROP_LOADER.getLocalDriverBinary("firefox"));
         FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
         FirefoxProfile firefoxProfile = new FirefoxProfile();
-        firefoxDriver = new FirefoxDriver(ffBinary, firefoxProfile);
-        //
+        WebDriver firefoxDriver = new FirefoxDriver(ffBinary, firefoxProfile);
         return firefoxDriver;
     }
 
     public static WebDriver getChromeDriver(){
         final String chromeDriverSystemProperty = "webdriver.chrome.driver";
-        WebDriver chromeDriver;
-        // Chrome settings
         String pathToBinary = PROP_LOADER.getLocalDriverBinary(CHROME);
         setScreenshot(true);
         System.setProperty(chromeDriverSystemProperty, pathToBinary);
-        chromeDriver = new ChromeDriver();
-        //
+        WebDriver chromeDriver = new ChromeDriver();
         return chromeDriver;
     }
 
     public static WebDriver getPhantomDriver(){
-        WebDriver phantomJsDriver;
-        // Phantom  settings
-//        DesiredCapabilities caps
         DesiredCapabilities caps = DesiredCapabilities.phantomjs();
         caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY,
                 PROP_LOADER.getLocalDriverBinary(PHANTOM));
         caps.setCapability("takesScreenshot", true);
-        phantomJsDriver = new PhantomJSDriver(caps);
-        //
+        WebDriver phantomJsDriver = new PhantomJSDriver(caps);
         return phantomJsDriver;
     }
 
