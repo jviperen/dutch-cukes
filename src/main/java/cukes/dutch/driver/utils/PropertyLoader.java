@@ -1,7 +1,5 @@
 package cukes.dutch.driver.utils;
 
-import cukes.dutch.driver.exceptions.CouldNotReadDriverFromLocalProperty;
-import cukes.dutch.driver.exceptions.CouldNotReadFromPomException;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
@@ -27,17 +25,13 @@ public class PropertyLoader {
 		Properties prop = new Properties();
 		prop.load(PropertyLoader.class.getClassLoader().getResourceAsStream(
 				"local.properties"));
-
-		logMessage(Level.INFO, "Local property " + propertyName.toUpperCase() + " is loaded with : \n"
-				+ prop.getProperty(propertyName) + "\n");
-
 		return prop.getProperty(propertyName);
 	}
 
-	public String getPomProperty(String propertyPom) throws CouldNotReadFromPomException {
-		String pompProperty = null;
+	public String getPomProperty(String propertyPom) {
+		String pompProperty;
 		Model model = null;
-		FileReader reader = null;
+		FileReader reader;
 		File pomFile = new File("pom.xml");
 		MavenXpp3Reader mavenReader = new MavenXpp3Reader();
 
@@ -46,7 +40,7 @@ public class PropertyLoader {
 		     model = mavenReader.read(reader);
 		     model.setPomFile(pomFile);
 		}catch(Exception ex){
-            throw new CouldNotReadFromPomException("We couldn't read from pomfile ", ex);
+            logMessage(Level.INFO, "Something went wrong while trying to read pom file" + ex);
         }
 
 		MavenProject project = new MavenProject(model);
@@ -57,19 +51,17 @@ public class PropertyLoader {
 		} else{
 			pompProperty = System.getProperty(propertyPom);
 		}
-		return pompProperty;
+        return pompProperty;
 	}
 
-    public String getLocalDriverBinary(String driver) throws CouldNotReadDriverFromLocalProperty {
+    public String getLocalDriverBinary(String driver){
         String driverBinary = null;
         String binaryLocationDriver = driver + ".binary.location";
         try {
             driverBinary = loadLocalProperty(binaryLocationDriver);
         } catch (IOException e) {
-            {
-                throw new CouldNotReadDriverFromLocalProperty("We couldn't read from local.properties, tried to read "
-                    + driver + " with binary " + binaryLocationDriver.toUpperCase(), e); }
-        }
+                          logMessage(Level.INFO, "We couldn't read from local.properties, tried to read "
+                                  + driver + " with binary " + binaryLocationDriver.toUpperCase() + e); }
         return driverBinary;
     }
 

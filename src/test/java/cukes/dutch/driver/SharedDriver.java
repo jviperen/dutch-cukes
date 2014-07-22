@@ -3,10 +3,7 @@ package cukes.dutch.driver;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cukes.dutch.driver.exceptions.CouldNotReadDriverFromLocalProperty;
-import cukes.dutch.driver.exceptions.CouldNotReadFromPomException;
 import cukes.dutch.driver.utils.PropertyLoader;
-import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -52,13 +49,7 @@ public class SharedDriver extends EventFiringWebDriver {
     }
 
     static {
-        try {
-            WEBDRIVER = getDriverFromProperties();
-        } catch (CouldNotReadFromPomException e) {
-            e.printStackTrace();
-        } catch (CouldNotReadDriverFromLocalProperty couldNotReadDriverFromLocalProperty) {
-            couldNotReadDriverFromLocalProperty.printStackTrace();
-        }
+        WEBDRIVER = getDriverFromProperties();
         WEBDRIVER.manage().timeouts().implicitlyWait(TIMEOUT, TimeUnit.SECONDS);
         WEBDRIVER.manage().timeouts().pageLoadTimeout(TIMEOUT, TimeUnit.SECONDS);
         Runtime.getRuntime().addShutdownHook(CLOSE_THREAD);
@@ -100,30 +91,30 @@ public class SharedDriver extends EventFiringWebDriver {
 
     // Retrieve driver name from pom file
 
-    private static WebDriver getDriverFromProperties() throws CouldNotReadFromPomException, CouldNotReadDriverFromLocalProperty {
-        WebDriver driver = null;
-        final String errorMessageNoBrowser = "No browser selected";
-        final String  browserSelected =  "Going to use browser type : ";
+    private static WebDriver getDriverFromProperties() {
         String browser = PROP_LOADER.getPomProperty("browser.type");
-
+        printBrowser(browser);
         if (browser.equals(FIREFOX)) {
-            driver = getFireFoxDriver();
+            WEBDRIVER = getFireFoxDriver();
         } else if (browser.equals(CHROME)) {
-            driver = getChromeDriver();
+            WEBDRIVER = getChromeDriver();
         } else if (browser.equals(PHANTOM)) {
-            driver = getPhantomDriver();
-        } else if (browser.equals("")) {
-            Assert.fail(errorMessageNoBrowser);
-
+            WEBDRIVER = getPhantomDriver();
         }
-        logMessage(Level.INFO, browserSelected + browser);
-        return driver;
+        return WEBDRIVER;
     }
+
+    private static void printBrowser(String browser){
+        System.out.println("***************************************************************");
+        System.out.println(" We are going to use driver : " + browser);
+        System.out.println("***************************************************************");
+    }
+
 
 
     // Drivers section
 
-    public static WebDriver getFireFoxDriver() throws CouldNotReadDriverFromLocalProperty {
+    public static WebDriver getFireFoxDriver(){
         WebDriver firefoxDriver;
         // FF binary and profile
         File pathToBinary = new File(PROP_LOADER.getLocalDriverBinary("firefox"));
@@ -135,19 +126,19 @@ public class SharedDriver extends EventFiringWebDriver {
         return firefoxDriver;
     }
 
-    public static WebDriver getChromeDriver() throws CouldNotReadDriverFromLocalProperty {
-        final String chromeDriverLocation = "webdriver.chrome.driver";
+    public static WebDriver getChromeDriver(){
+        final String chromeDriverSystemProperty = "webdriver.chrome.driver";
         WebDriver chromeDriver;
         // Chrome settings
         String pathToBinary = PROP_LOADER.getLocalDriverBinary(CHROME);
         setScreenshot(true);
-        System.setProperty(chromeDriverLocation, pathToBinary);
+        System.setProperty(chromeDriverSystemProperty, pathToBinary);
         chromeDriver = new ChromeDriver();
         //
         return chromeDriver;
     }
 
-    public static WebDriver getPhantomDriver() throws CouldNotReadDriverFromLocalProperty {
+    public static WebDriver getPhantomDriver(){
         WebDriver phantomJsDriver = null;
         // Phantom  settings
         DesiredCapabilities caps = new DesiredCapabilities();
