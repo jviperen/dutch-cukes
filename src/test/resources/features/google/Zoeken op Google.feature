@@ -4,8 +4,9 @@ Functionaliteit: Gebruiker zoekt via google en opent gezochte website
 
   - Acceptance criteria
   - AC 1: Moet Nederlandse versie van google openen
-  - AC 2: Moet zoeken naar facebook en youtube en vinden
-  - AC 2: Achtergrond moet 3 (2 x scen 1 en 1 x scen 2) keer zijn uitgevoerd
+  - AC 2: Moet zoeken naar Raspberry Pi homepage en Cucumber BDD homepage
+  - AC 3: Moet gezochte criteria vinden en openen
+  - AC 4: Achtergrond moet 3 (2 x scen 1 en 1 x scen 2) keer zijn uitgevoerd
 
 
   Achtergrond:
