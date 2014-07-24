@@ -1,7 +1,9 @@
 DutchCukes
 ==========
 
-Dutch Gherkin Cucumber Project based on the jvm.cukes.parralel project. Pleae use Cucumber as a collaboration tool and not just as a testing tool. Read following : https://cucumber.pro/blog/2014/03/03/the-worlds-most-misunderstood-collaboration-tool.html
+Dutch Gherkin Cucumber Project based on SharedDriver
+
+Pleae use Cucumber as a collaboration tool and not just as a testing tool. Read following : https://cucumber.pro/blog/2014/03/03/the-worlds-most-misunderstood-collaboration-tool.html
 
 
 How to run tests (from root dir)
