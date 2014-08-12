@@ -2,7 +2,6 @@
 # Don't delete language comment line
 #@tag
 # Functionaliteit: Beschrijving van functionaliteit
-BLAAT
 
   # - Acceptance criteria
   # - AC 1: acceptatie criteria
